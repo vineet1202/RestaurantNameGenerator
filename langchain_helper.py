@@ -1,18 +1,20 @@
-from secret_key import GOOGLE_API_KEY
+import os
+
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-import os
-os.environ['GOOGLE_API_KEY'] = GOOGLE_API_KEY
 llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash", temperature=0.6)
-
 
 def get_restaurant_name_and_items(cuisine):
 
     prompt_name = PromptTemplate.from_template(
-        "I want to open a restaurant for {cuisine} food. Suggest one fancy name for this.")
+        """Suggest a creative restaurant name for {cuisine} cuisine.
+            Return ONLY the restaurant name and what it means.
+            Do not include any explanation, introduction, quotation marks, or extra text.
+        """
+        )
     prompt_items = PromptTemplate.from_template(
         "Suggest me 3 menu items for {restaurant_name}. Give 3 names as comma separated list.")
     parser = StrOutputParser()

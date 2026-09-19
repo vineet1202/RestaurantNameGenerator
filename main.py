@@ -3,11 +3,13 @@ import langchain_helper
 
 st.title("Restaurant Name Generator")
 
-cuisine = st.sidebar.selectbox("Pick a cuisine", ("Indian", "Mexican", "Italian", "Chinese"))
+cuisine = st.sidebar.selectbox( "Pick a cuisine", ("Select a cuisine", "Indian", "Mexican", "Italian", "Chinese") )
 
-if cuisine :
+if cuisine != "Select a cuisine":
     try:
-        response = langchain_helper.get_restaurant_name_and_items(cuisine)
+        with st.spinner("Generating restaurant name and menu..."):
+            response = langchain_helper.get_restaurant_name_and_items(cuisine)
+
         st.header(response['restaurant_name'].strip())
         menu_items = response['items'].strip().split(",")
         st.write("**Menu Items**")
