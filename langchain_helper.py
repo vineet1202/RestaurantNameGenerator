@@ -1,11 +1,15 @@
-import os
+import streamlit as st
 
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash", temperature=0.6)
+llm = ChatGoogleGenerativeAI(
+        model="gemini-3.5-flash",
+        temperature=0.6,
+        google_api_key=st.secrets["GOOGLE_API_KEY"]
+)
 
 def get_restaurant_name_and_items(cuisine):
 
